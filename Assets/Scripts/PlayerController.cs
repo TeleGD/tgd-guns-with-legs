@@ -6,11 +6,13 @@ public class PlayerController : MonoBehaviour
 {
     public int playerID;
     private Rigidbody rb;
+    private Animator anim;
     private float speed = 5;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        anim = GetComponent<Animator>();
     }
     
     void FixedUpdate()
@@ -23,6 +25,7 @@ public class PlayerController : MonoBehaviour
             Quaternion targetRot = Quaternion.Euler(0, Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg, 0);
             transform.rotation = targetRot;
         }
-        
+
+        anim.SetFloat("speed", dir.magnitude);
     }
 }
