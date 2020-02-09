@@ -30,7 +30,7 @@ public class CameraConstrainer : MonoBehaviour
 
         if (player1.activeSelf.Equals(false) || player2.activeSelf.Equals(false))
         {
-            //StartCoroutine(delayedEnd(3));
+            StartCoroutine(delayedEnd(3));
             
         }
     }
