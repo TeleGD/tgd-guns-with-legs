@@ -25,14 +25,14 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 dir = new Vector3(Input.GetAxis("Horizontal" + playerID) * speed, 0, Input.GetAxis("Vertical" + playerID) * speed);
         rb.velocity = dir;
-        
-        if(dir.sqrMagnitude > 1f)
+        float actualSpeed = dir.magnitude;
+        if(actualSpeed > speed * 0.25f)
         {
             Quaternion targetRot = Quaternion.Euler(0, Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg, 0);
-            transform.rotation = targetRot;
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, Time.deltaTime * 360);
         }
 
-        anim.SetFloat("speed", dir.magnitude);
+        anim.SetFloat("speed", actualSpeed);
     }
 
     private void Update()
