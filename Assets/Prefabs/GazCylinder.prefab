@@ -51,7 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   particles: {fileID: 1739947404179952023, guid: 6c4cb513e75780849af7c42bca9b9c0a,
     type: 3}
-  exploser: {fileID: 0}
+  exploser: {fileID: 629974767803455646, guid: 6168d585439911f45b2e2cf8a76475d9, type: 3}
 --- !u!54 &1485972699287708063
 Rigidbody:
   m_ObjectHideFlags: 0

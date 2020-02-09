@@ -27,6 +27,12 @@ public class CameraConstrainer : MonoBehaviour
         Vector3 directorAxis = new Vector3(0, Mathf.Sin(angleRad), -Mathf.Cos(angleRad));
 
         transform.position = newCameraPos(focusPoint, directorAxis);
+
+        if (player1.activeSelf.Equals(false) || player2.activeSelf.Equals(false))
+        {
+            //StartCoroutine(delayedEnd(3));
+            
+        }
     }
 
 
@@ -40,7 +46,11 @@ public class CameraConstrainer : MonoBehaviour
     {
         return (player1.transform.position + player2.transform.position) / 2;
     }
+   
+    IEnumerator delayedEnd(int i)
+    {
+        yield return new WaitForSeconds(i);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+    }
 
-
-    
 }

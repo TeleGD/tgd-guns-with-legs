@@ -23,11 +23,11 @@ public class ExplosionControler : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.name.Equals(exploser.name))
+        if (other.CompareTag(exploser.tag))
         {
-            print("coucou"); 
+            particles.transform.position = gameObject.transform.position;
             Instantiate(particles);
-            particles.Emit(1);
+
             gameObject.SetActive(false);
         }
     }

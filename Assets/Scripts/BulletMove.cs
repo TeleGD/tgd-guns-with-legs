@@ -13,7 +13,7 @@ public class BulletMove : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        print(other.name);
+        //print(other.name);
         Destroy(gameObject);
     }
 }
