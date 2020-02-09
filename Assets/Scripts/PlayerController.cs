@@ -9,6 +9,12 @@ public class PlayerController : MonoBehaviour
     private Animator anim;
     private float speed = 5;
 
+    public GameObject bulletPrefab;
+    public Transform muzzle;
+
+    public float reloadTime = 0.5f;
+    private float nextFireTime;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -27,5 +33,20 @@ public class PlayerController : MonoBehaviour
         }
 
         anim.SetFloat("speed", dir.magnitude);
+    }
+
+    private void Update()
+    {
+        if(Input.GetButtonDown("Fire" + playerID) && Time.time > nextFireTime)
+        {
+            nextFireTime = Time.time + reloadTime;
+            Instantiate(bulletPrefab, muzzle.position, Quaternion.Euler(0, transform.eulerAngles.y, 0));
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Bullet"))
+            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
 }
