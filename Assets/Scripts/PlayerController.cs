@@ -44,4 +44,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Bullet"))
+        {
+            GameManager.instance.EndRound();
+            gameObject.SetActive(false);
+        }
+    }
 }
