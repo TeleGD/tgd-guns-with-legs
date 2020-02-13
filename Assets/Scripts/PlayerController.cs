@@ -79,6 +79,7 @@ public class PlayerController : MonoBehaviour
         Vector3 pos = GetWeapon().muzzle.position;
         GameObject go = Instantiate(bulletPrefab, pos, Quaternion.Euler(0, transform.eulerAngles.y + angleOffset, 0));
         go.GetComponent<BulletMove>().SetOwner(gameObject);
+        go.GetComponent<BulletMove>().speed = GetWeapon().bulletSpeed;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -95,6 +96,7 @@ public class PlayerController : MonoBehaviour
     {
         public Transform muzzle;
         public float reloadTime;
+        public float bulletSpeed;
     }
 }
 
