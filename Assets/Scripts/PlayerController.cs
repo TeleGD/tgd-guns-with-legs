@@ -10,15 +10,17 @@ public class PlayerController : MonoBehaviour
     private float speed = 5;
 
     public GameObject bulletPrefab;
-    public Transform muzzle;
-
-    public float reloadTime = 0.5f;
     private float nextFireTime;
+
+    public Transform weaponHolder;
+    public WeaponData[] weaponsData;
+    private int currentWeapon = 0;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
+        SetWeapon(-1);
     }
     
     void FixedUpdate()
@@ -39,17 +41,62 @@ public class PlayerController : MonoBehaviour
     {
         if(Input.GetButtonDown("Fire" + playerID) && Time.time > nextFireTime)
         {
-            nextFireTime = Time.time + reloadTime;
-            Instantiate(bulletPrefab, muzzle.position, Quaternion.Euler(0, transform.eulerAngles.y, 0));
+            if(currentWeapon != -1)
+            {
+
+            
+                nextFireTime = Time.time + GetWeapon().reloadTime;
+
+                if (currentWeapon == 0)
+                    FireBullet(0);
+                else
+                {
+                    for (int i = -2; i <= 2; i++)
+                    {
+                        FireBullet(i * 5);
+                    }
+                }
+            }
+
         }
+    }
+
+    private WeaponData GetWeapon()
+    {
+        return weaponsData[currentWeapon];
+    }
+
+    public void SetWeapon(int id)
+    {
+        currentWeapon = id;
+
+        for (int i = 0; i < weaponHolder.childCount; i++)
+        {
+            weaponHolder.GetChild(i).gameObject.SetActive(currentWeapon == i);
+        }
+    }
+
+    private void FireBullet(float angleOffset)
+    {
+        Vector3 pos = GetWeapon().muzzle.position;
+        GameObject go = Instantiate(bulletPrefab, pos, Quaternion.Euler(0, transform.eulerAngles.y + angleOffset, 0));
+        go.GetComponent<BulletMove>().SetOwner(gameObject);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Bullet"))
+        if (other.CompareTag("Bullet") && other.GetComponent<BulletMove>().owner != gameObject)
         {
             GameManager.instance.EndRound();
             gameObject.SetActive(false);
         }
     }
+
+    [System.Serializable]
+    public struct WeaponData
+    {
+        public Transform muzzle;
+        public float reloadTime;
+    }
 }
+

@@ -10,7 +10,7 @@ public class ExplosionControler : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Bullet"))
+        if (other.CompareTag("Bullet") && other.GetComponent<BulletMove>().owner != gameObject)
         {
             Instantiate(particles, transform.position, Quaternion.identity);
 

@@ -4,7 +4,13 @@ using UnityEngine;
 
 public class BulletMove : MonoBehaviour
 {
+    public GameObject owner;
     public float speed = 10;
+
+    public void SetOwner(GameObject newOwner)
+    {
+        owner = newOwner;
+    }
 
     void Update()
     {
@@ -13,7 +19,8 @@ public class BulletMove : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //print(other.name);
-        Destroy(gameObject);
+        print(other.transform.root.gameObject);
+        if(!other.CompareTag("Bullet") && other.transform.root.gameObject != owner)
+            Destroy(gameObject);
     }
 }
