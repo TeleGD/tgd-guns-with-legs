@@ -896,9 +896,9 @@ MonoBehaviour:
   weaponHolder: {fileID: 3602264344453482774}
   weaponsData:
   - muzzle: {fileID: 2048675367988417311}
-    reloadTime: 0.5
+    reloadTime: 0.35
   - muzzle: {fileID: 5912619006086435068}
-    reloadTime: 1
+    reloadTime: 1.5
 --- !u!95 &132599881723042054
 Animator:
   serializedVersion: 3

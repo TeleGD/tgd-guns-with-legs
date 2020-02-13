@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
         if(actualSpeed > speed * 0.25f)
         {
             Quaternion targetRot = Quaternion.Euler(0, Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg, 0);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, Time.deltaTime * 360);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, Time.deltaTime * 1000);
         }
 
         anim.SetFloat("speed", actualSpeed);
@@ -43,8 +43,6 @@ public class PlayerController : MonoBehaviour
         {
             if(currentWeapon != -1)
             {
-
-            
                 nextFireTime = Time.time + GetWeapon().reloadTime;
 
                 if (currentWeapon == 0)
