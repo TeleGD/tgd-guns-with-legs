@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private Animator anim;
     private float speed = 5;
+    private Vector3 externalForce;
+    public float airDrag = 1.5f;
 
     public GameObject bulletPrefab;
     private float nextFireTime;
@@ -21,11 +23,13 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         SetWeapon(-1);
+        externalForce = new Vector3(0,0,0);
     }
     
     void FixedUpdate()
     {
-        Vector3 dir = new Vector3(Input.GetAxis("Horizontal" + playerID) * speed, 0, Input.GetAxis("Vertical" + playerID) * speed);
+        Vector3 dir = new Vector3(Input.GetAxis("Horizontal" + playerID) * speed,rb.velocity.y, Input.GetAxis("Vertical" + playerID) * speed);
+        
         rb.velocity = dir;
         float actualSpeed = dir.magnitude;
         if(actualSpeed > speed * 0.25f)
@@ -35,6 +39,8 @@ public class PlayerController : MonoBehaviour
         }
 
         anim.SetFloat("speed", actualSpeed);
+        rb.velocity += externalForce;
+        updateForce();
     }
 
     private void Update()
@@ -97,6 +103,19 @@ public class PlayerController : MonoBehaviour
         public Transform muzzle;
         public float reloadTime;
         public float bulletSpeed;
+    }
+
+    public void setExternalForce(Vector3 v)
+    {
+        externalForce = new Vector3(v.x, 0, v.z);
+        rb.velocity = new Vector3(rb.velocity.x, v.y, rb.velocity.z);
+    }
+
+    private void updateForce()
+    {
+
+        print(externalForce);
+        externalForce = Vector3.Lerp(externalForce,Vector3.zero, Time.deltaTime*airDrag);
     }
 }
 
