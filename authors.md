@@ -1,0 +1,3 @@
+- Christopher Schirlé (@ChristopherSchirle)
+- Merlin Baudou (@Panquo)
+- Stéphane Hulot (@stephane-hulot)
